@@ -1,0 +1,13 @@
+### Java ###
+*.class
+
+### Eclipse ###
+/.settings/
+
+### Gradle ###
+.gradle
+gradle-app.setting
+/build/
+/bin/
+
+/WEB-INF/classes/
