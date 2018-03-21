@@ -16,9 +16,9 @@ public class Solver {
     private static void findSolutions(Matrix currentState) {
         callCount++;
         
-        if (callCount > 10) return;
+        //if (callCount > 1000) return;
         
-        if (currentState == null) {
+        if (currentState == null || !currentState.isCorrect()) {
             return;
         }
         
@@ -26,6 +26,7 @@ public class Solver {
         
         
         if (currentState.isEndState() && currentState.isCorrect()) {
+        	System.out.println("SUCCESS");
             System.out.println(currentState.toString());
             return;
         }

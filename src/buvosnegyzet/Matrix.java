@@ -10,6 +10,7 @@ public class Matrix {
     private Integer lastX = 0, lastY = 0;
     private int count;
     private Set<Integer> numbersInMatrix= new HashSet<Integer>(16); 
+    private boolean correct;
     
     public Matrix() {
     	int[] data = new int[16];
@@ -25,7 +26,7 @@ public class Matrix {
      */
     public Matrix(int[] data) {
         if (data.length != 16) {
-            throw new RuntimeException("16 chars is expected");
+            throw new RuntimeException("16 numbers is expected");
         }
         
         for (int rowIdx=0; rowIdx<4; rowIdx++) {
@@ -44,6 +45,8 @@ public class Matrix {
                 }
             }
         }
+        
+        correct = getCorrectness();
     }
     
     private Matrix(Matrix baseMatrix, int newX, int newY, int newValue) {
@@ -55,6 +58,7 @@ public class Matrix {
                     count++;
                     lastX = colIdx;
                     lastY = rowIdx;
+                    numbersInMatrix.add(x);
                 }
             }
         }
@@ -67,10 +71,14 @@ public class Matrix {
     public boolean isEndState() {
         return count == 12;
     }
+    
+    public boolean isCorrect() {
+    	return correct;
+    }
 
     // TODO okosítani, 
-    public boolean isCorrect() {
-        if (count == 12) {
+    private boolean getCorrectness() {
+        if (isEndState()) {
             int sum = getRowSum(0);
             if (sum != 19) return false;   // 19
             sum = getRowSum(1);
@@ -163,6 +171,10 @@ public class Matrix {
         	}
         }
         
+        if (newValue == 0) {
+        	return null;
+        }
+        
         return new Matrix(this, newX, newY, newValue);
     }
 
@@ -187,15 +199,16 @@ public class Matrix {
         for (int rowIdx=0; rowIdx<4; rowIdx++) {
             for (int colIdx=0; colIdx<4; colIdx++) {
             	if (rowIdx==colIdx) {
-            		sb.append(" X");
+            		sb.append("  X");
             	} else if (theMatrix[colIdx][rowIdx] > 9) {
-                    sb.append(theMatrix[colIdx][rowIdx]);            		
+            		sb.append(" ").append(theMatrix[colIdx][rowIdx]);            		
             	} else {
-            		sb.append(" ").append(theMatrix[colIdx][rowIdx]);
+            		sb.append("  ").append(theMatrix[colIdx][rowIdx]);
             	}
             }
             sb.append("\n");
         }
+        sb.append("count : ").append(count).append("; numbers : ").append(numbersInMatrix);
         return sb.toString();
     }
 
