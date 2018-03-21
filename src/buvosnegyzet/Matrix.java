@@ -1,9 +1,7 @@
 package buvosnegyzet;
 
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.function.Supplier;
 
 public class Matrix {
     private int[][] theMatrix = new int[4][4];
@@ -13,17 +11,9 @@ public class Matrix {
     private boolean correct;
     
     public Matrix() {
-    	int[] data = new int[16];
-    	data[1] = 1;
-    	for (int i=0; i<16; i++) {
-    		data[i] = 0;
-    	}
+    	this(new int[] {0,1,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0});
     }
 
-    /*
-     * data : "X0001X0000X0000X"
-     * 
-     */
     public Matrix(int[] data) {
         if (data.length != 16) {
             throw new RuntimeException("16 numbers is expected");
@@ -62,6 +52,7 @@ public class Matrix {
                 }
             }
         }
+        correct = getCorrectness();
     }
     
     public int getCount() {
@@ -76,46 +67,35 @@ public class Matrix {
     	return correct;
     }
 
-    // TODO okosítani, 
     private boolean getCorrectness() {
-        if (isEndState()) {
-            int sum = getRowSum(0);
-            if (sum != 19) return false;   // 19
-            sum = getRowSum(1);
-            if (sum != 22) return false;   // 22
-            sum = getRowSum(2);
-            if (sum != 20) return false;   // 20
-            sum = getRowSum(3);
-            if (sum != 17) return false;   // 17
-            
-            sum = getColumnSum(0);
-            if (sum != 20) return false;   // 20
-            sum = getColumnSum(1);
-            if (sum != 19) return false;   // 19
-            sum = getColumnSum(2);
-            if (sum != 17) return false;   // 17
-            sum = getColumnSum(3);
-            if (sum != 22) return false;   // 22
-        } else {
-            int sum = getRowSum(0);
-            if (sum > 19) return false;   // 19
-            sum = getRowSum(1);
-            if (sum > 22) return false;   // 22
-            sum = getRowSum(2);
-            if (sum > 20) return false;   // 20
-            sum = getRowSum(3);
-            if (sum > 17) return false;   // 17
-            
-            sum = getColumnSum(0);
-            if (sum > 20) return false;   // 20
-            sum = getColumnSum(1);
-            if (sum > 19) return false;   // 19
-            sum = getColumnSum(2);
-            if (sum > 17) return false;   // 17
-            sum = getColumnSum(3);
-            if (sum > 22) return false;   // 22        	
-        }
-                
+    	int sum = 0, count = 0;
+    	
+        sum = getRowSum(0);
+        count = getRowCount(0);
+        if (count == 3 && sum != 19 || count != 3 && sum >= 19) return false;   // 19
+        sum = getRowSum(1);
+        count = getRowCount(1);
+        if (count == 3 && sum != 22 || count != 3 && sum >= 22) return false;   // 22
+        sum = getRowSum(2);
+        count = getRowCount(2);
+        if (count == 3 && sum != 20 || count != 3 && sum >= 20) return false;   // 20
+        sum = getRowSum(3);
+        count = getRowCount(3);
+        if (count == 3 && sum != 17 || count != 3 && sum >= 17) return false;   // 17
+        
+        sum = getColumnSum(0);
+        count = getColumnCount(0);
+        if (count == 3 && sum != 20 || count != 3 && sum >= 20) return false;   // 20
+        sum = getColumnSum(1);
+        count = getColumnCount(1);
+        if (count == 3 && sum != 19 || count != 3 && sum >= 19) return false;   // 19
+        sum = getColumnSum(2);
+        count = getColumnCount(2);
+        if (count == 3 && sum != 17 || count != 3 && sum >= 17) return false;   // 17
+        sum = getColumnSum(3);
+        count = getColumnCount(3);
+        if (count == 3 && sum != 22 || count != 3 && sum >= 22) return false;   // 22
+        
         return true;
     }
 
@@ -185,6 +165,14 @@ public class Matrix {
         }
         return sum;
     }
+    
+    private int getRowCount(int rowIdx) {
+        int cnt = 0;
+        for (int i=0; i<4; i++) {
+            cnt += theMatrix[i][rowIdx] == 0 ? 0 : 1;
+        }
+        return cnt;
+    }
 
     private int getColumnSum(int columnIdx) {
         int sum = 0;
@@ -192,6 +180,13 @@ public class Matrix {
             sum += theMatrix[columnIdx][i];
         }
         return sum;
+    }
+    private int getColumnCount(int columnIdx) {
+        int cnt = 0;
+        for (int i=0; i<4; i++) {
+            cnt += theMatrix[columnIdx][i] == 0 ? 0 : 1;
+        }
+        return cnt;
     }
 
     public String toString() {
@@ -208,7 +203,6 @@ public class Matrix {
             }
             sb.append("\n");
         }
-        sb.append("count : ").append(count).append("; numbers : ").append(numbersInMatrix);
         return sb.toString();
     }
 

@@ -1,49 +1,36 @@
 package buvosnegyzet;
 
 public class Solver {
-    static int callCount = 0;
+	static int solutionCounter = 1;
 
-    public static void main(String[] args) {
-        
-        Matrix matrix = new Matrix();
+	public static void main(String[] args) {
+    	Matrix matrix = new Matrix();
         
         findSolutions(matrix);
         
         System.out.println("End");
-        
     }
 
-    private static void findSolutions(Matrix currentState) {
-        callCount++;
-        
-        //if (callCount > 1000) return;
-        
-        if (currentState == null || !currentState.isCorrect()) {
-            return;
-        }
-        
-        System.out.println(currentState + " - level " + currentState.getCount());
-        
+    private static void findSolutions(Matrix currentState) {        
+		if (currentState == null) {
+		    return;
+		}
         
         if (currentState.isEndState() && currentState.isCorrect()) {
-        	System.out.println("SUCCESS");
+        	System.out.println("Solution #" + solutionCounter);
             System.out.println(currentState.toString());
+            solutionCounter++;
             return;
         }
         
         Matrix nextMatrixState = currentState;
         while (nextMatrixState != null) {
-            findSolutions(nextMatrixState.getNextLevelState());
+            // System.out.println(nextMatrixState);
+        	if (nextMatrixState.isCorrect()) {
+        		findSolutions(nextMatrixState.getNextLevelState());
+        	}
             nextMatrixState = nextMatrixState.getNextState();
         }
-        
-    }
-    
-    private static void testNextState() {
-        PatternMatrix patternMatrix = new PatternMatrix("X1110X1100X0000X");
-        System.out.println(patternMatrix);
-        System.out.println(patternMatrix.getNextState());
-        System.out.println(patternMatrix.getNextLevelState());
     }
 
 }
