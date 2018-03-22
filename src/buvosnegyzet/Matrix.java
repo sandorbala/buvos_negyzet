@@ -205,5 +205,24 @@ public class Matrix {
         }
         return sb.toString();
     }
+    
+    public String getOddityString() {
+    	StringBuffer sb = new StringBuffer(16);
+    	
+        for (int rowIdx=0; rowIdx<4; rowIdx++) {
+            for (int colIdx=0; colIdx<4; colIdx++) {
+            	int x = theMatrix[colIdx][rowIdx];
+            	if (colIdx == rowIdx) {
+            		sb.append("X");
+            	} else if (x%2 == 0) {
+            		sb.append("O");
+            	} else {
+            		sb.append("_");
+            	}
+            }
+        }
+    	
+    	return sb.toString();
+    }
 
 }
