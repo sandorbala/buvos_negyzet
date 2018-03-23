@@ -98,7 +98,6 @@ public class PatternMatrix {
     public PatternMatrix getNextState() {
         int newX, newY;
         if (isEndState()) {
-            // throw new RuntimeException("No next state possible");
             return null;
         }
         
@@ -115,11 +114,8 @@ public class PatternMatrix {
         }
         
         if (newX > 3 || newY > 3) {
-            //throw new RuntimeException("Invalid next place : "+newX+" - "+newY);
             return null;
         }
-        
-        // System.out.println(lastX + " " + lastY + " " + newX + " " + newY);      
         
         return new PatternMatrix(this, newX, newY, lastX, lastY);
     }
@@ -127,8 +123,7 @@ public class PatternMatrix {
     public PatternMatrix getNextLevelState() {
         int newX, newY;
         if (isEndState()) {
-            // throw new RuntimeException("No next state possible");
-            return null;
+           return null;
         }
         
         if (lastX == 3) {
@@ -144,11 +139,8 @@ public class PatternMatrix {
         }
         
         if (newX > 3 || newY > 3) {
-            //throw new RuntimeException("Invalid next place : "+newX+" - "+newY);
             return null;
         }
-        
-        // System.out.println(lastX + " " + lastY + " " + newX + " " + newY);      
         
         return new PatternMatrix(this, newX, newY);
     }

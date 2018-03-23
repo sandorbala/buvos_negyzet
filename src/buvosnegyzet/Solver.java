@@ -1,6 +1,7 @@
 package buvosnegyzet;
 
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 
 public class Solver {
@@ -11,7 +12,6 @@ public class Solver {
     	Matrix matrix = new Matrix();
         
         findSolutions(matrix);
-        
         printOdditySet();
         
         System.out.println("End");
@@ -32,7 +32,6 @@ public class Solver {
         
         Matrix nextMatrixState = currentState;
         while (nextMatrixState != null) {
-            // System.out.println(nextMatrixState);
         	if (nextMatrixState.isCorrect()) {
         		findSolutions(nextMatrixState.getNextLevelState());
         	}
@@ -42,8 +41,16 @@ public class Solver {
 	
 
     private static void printOdditySet() {
-		// TODO
-		
-	}
-
+        Iterator<String> iterator = odditySet.iterator();
+        
+        while (iterator.hasNext()) {
+            String s = iterator.next();
+            System.out.println(s.substring(0, 4));
+            System.out.println(s.substring(4, 8));
+            System.out.println(s.substring(8, 12));
+            System.out.println(s.substring(12));
+            System.out.println();
+        }
+        
+    }
 }

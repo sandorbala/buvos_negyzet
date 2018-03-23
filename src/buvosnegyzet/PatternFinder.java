@@ -32,12 +32,5 @@ public class PatternFinder {
         }
         
     }
-    
-    private static void testNextState() {
-        PatternMatrix patternMatrix = new PatternMatrix("X1110X1100X0000X");
-        System.out.println(patternMatrix);
-        System.out.println(patternMatrix.getNextState());
-        System.out.println(patternMatrix.getNextLevelState());
-    }
 
 }
